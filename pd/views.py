@@ -145,4 +145,4 @@ def online_payment(request):
         # Integrate with a payment gateway like Stripe or Razorpay
         # You can redirect to a payment page or gateway
         return redirect('payment_gateway.html')  # Replace with your actual payment handling URL
-# Handle Cash on Delivery
+
