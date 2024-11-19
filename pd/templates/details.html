@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Product Details</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        .rohit {
+            background-color: bisque;
+            padding: 15px;
+        }
+
+        .rohit a {
+            font-size: 1.2rem;
+            display: inline-block;
+            padding: 10px 20px;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Active class for the navbar */
+        .active {
+            color: #00008B;
+        }
+        
+        /* Hover effect for navbar links */
+        .rohit a:hover {
+            background-color: #ddd;
+            color: blue;
+            border-radius: 5px;
+        }
+
+        .cart-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .cart-btn:hover {
+            background-color: #218838;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-btn {
+            width: 75px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+
+        .product-container {
+            margin: 40px auto;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #28a745;
+        }
+
+        .rating .star {
+            color: gold;
+            font-size: 1.5rem;
+        }
+
+        .add-to-cart-btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+        }
+
+        .recommended-products {
+            margin-top: 50px;
+        }
+
+        .recommended-products h3 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .recommended-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .recommended-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            padding: 15px;
+            flex: 0 0 22%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommended-card img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .recommended-card h5 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .recommended-card a {
+            text-decoration: none;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .recommended-card a:hover {
+            color: #218838;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header and Navbar -->
+    <header>
+        <h1>NEAPOLI ONLINE SHOP</h1>
+        <div class="rohit">
+            <a class="active" href="/home">NepoliOnlineShop</a>
+            <a href="/about">ABOUT</a>
+            <a href="/contact">CONTACT US</a>
+            <div class="dropdown d-inline-block">
+                <a class="dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    SHOP
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="shopDropdown">
+                    <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'tops' %}">Tops</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'bottoms' %}">Bottoms</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'shoes' %}">Shoes</a></li>
+                </ul>
+            </div>
+            <a href="/login">SignUp</a>
+
+            <!-- Add to Cart Button and icon from xml and Bootstrap -->
+            <a href="/cart" class="cart-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .962.725L4.89 6H13a1 1 0 0 1 .962 1.275l-1.5 6A1 1 0 0 1 11.5 14H4.5a1 1 0 0 1-.962-.725L2.11 8H1a1 1 0 0 1-1-1V1zm2 1v5h10l1.429-5H3.5L2 2zM4.5 16a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm7 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+                Cart
+            </a>
+        </div>
+    </br>
+        <!-- Search Form -->
+        <form method="get" action="/search" class="search-container">
+            <input type="search" placeholder="Search" class="search-input" name="query" id="search">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+    </header>
+
+    <!-- Product Details Section -->
+    <div class="container product-container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+            </div>
+            <div class="col-md-6 product-details">
+                <h2>{{ product.name }}</h2> 
+                <p class="product-price">Rs{{ product.price }}</p>
+                <p>{{ product.description }}</p>
+
+                <!-- Product Rating -->
+               
+
+                <!-- Add to Cart Button -->
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Recommended Products Section -->
+        <div class="recommended-products">
+            <h3>Recommended Products</h3>
+            <div class="recommended-row">
+                {% for recommended in products %}
+                <div class="recommended-card">
+                    <img src="{{ recommended.image.url }}" alt="{{ recommended.name }}" class="img-fluid">
+                    <h5>{{ recommended.name }}</h5>
+                    <p>Rs{{ recommended.price }}</p>
+                    <a href="{% url 'product' recommended.id %}">View Details</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 NEAPOLI ONLINE SHOP. All Rights Reserved.</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="/contact">Contact</a>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
